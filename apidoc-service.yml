@@ -1,0 +1,36 @@
+server:
+  port: 9105
+  # spring boot rest exception message empty
+  error:
+    include-message: always
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_SERVER:http://localhost:8761/eureka}
+  instance:
+    health-check-url-path: /actuator/health
+    #instance-id: ${spring.application.name}-${random.uuid}
+
+spring:
+  boot:
+    admin:
+      discovery:
+        converter:
+          management-context-path: /actuator
+  cloud:
+    loadbalancer:
+      ribbon:
+        enabled: false
+
+#Exposition des endpoints avec actuator
+#management.endpoints.web.exposure.include=*
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,beans,env
+
+swagger:
+  config:
+    refreshrate: 10000
