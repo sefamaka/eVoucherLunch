@@ -1,0 +1,68 @@
+server:
+  port: 9103 #server port dynamically assign : 0
+  # spring boot rest exception message empty
+  error:
+    include-message: always
+
+#Eureka
+#eureka.server.enableSelfPreservation=false
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_SERVER:http://localhost:8761/eureka}
+  instance:
+    health-check-url-path: /actuator/health
+    #instance-id: ${spring.application.name}-${random.uuid}
+
+spring:
+  boot:
+    admin:
+      discovery:
+        converter:
+          management-context-path: /actuator
+  cloud:
+    loadbalancer:
+      ribbon:
+        enabled: false
+    discovery:
+      enabled: true
+  gateway:
+    discovery:
+      locator:
+        enabled: true
+        lower-case-service-id: true
+    routes:
+    - id: partners
+      uri: lb://partner-service/
+      predicates:
+        - Path: /api/partners/**,/api/managers/**,/api/categories/**,/api/votes
+    - id: organizations
+      uri: lb://organization-service/
+      predicates:
+        - Path: /api/organizations/**,/api/contrats/**
+
+#spring.cloud.gateway.routes[0].filters[0].name=filter
+#spring.cloud.gateway.routes[0].predicates[1]=Path=/managers/**
+#spring.cloud.gateway.routes[0].predicates[2]=Path=/categories/**
+
+#spring.cloud.gateway.routes[0].filters[0].name=filter
+#spring.cloud.gateway.routes[0].filters[0]=RewritePath=/partner/(?<path>.*), /$\{path}
+
+#Exposition des endpoints avec actuator
+#management.endpoints.web.exposure.include=*
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,beans,env
+
+#Info
+info:
+  app:
+    version: 1.0-Beta
+
+#App Properties
+evoucherlunch:
+  app:
+    jwtSecret: eVoucherLunchSecretKey
+    jwtExpirationMs: 86400000
