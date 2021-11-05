@@ -4,17 +4,6 @@ server:
   error:
     include-message: always
 
-#Eureka
-#eureka.server.enableSelfPreservation=false
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: ${EUREKA_URI:http://localhost:8761/eureka}
-  instance:
-    preferIpAddress: true
-    health-check-url-path: /actuator/health
-    #instance-id: ${spring.application.name}-${random.uuid}
-
 spring:
   boot:
     admin:
@@ -27,20 +16,21 @@ spring:
         enabled: false
     discovery:
       enabled: true
-  gateway:
-    discovery:
-      locator:
-        enabled: true
-        lower-case-service-id: true
-    routes:
-    - id: partners
-      uri: lb://partner-service/
-      predicates:
-        - Path: /api/partners/**,/api/managers/**,/api/categories/**,/api/votes
-    - id: organizations
-      uri: lb://organization-service/
-      predicates:
-        - Path: /api/organizations/**,/api/contrats/**
+    gateway:
+      default-filters: TokenRelay
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      routes:
+        - id: partners
+        uri: lb://partner-service/
+        predicates:
+          - Path: /api/partners/**,/api/managers/**,/api/categories/**,/api/votes
+        - id: organizations
+        uri: lb://organization-service/
+        predicates:
+          - Path: /api/organizations/**,/api/contrats/**
 
 #spring.cloud.gateway.routes[0].filters[0].name=filter
 #spring.cloud.gateway.routes[0].predicates[1]=Path=/managers/**
