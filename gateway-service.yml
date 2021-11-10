@@ -1,5 +1,5 @@
 server:
-  port: 9103 #server port dynamically assign : 0
+  port: 8080 #9103 #server port dynamically assign : 0
   # spring boot rest exception message empty
   error:
     include-message: always
@@ -54,6 +54,6 @@ info:
 
 #App Properties
 evoucherlunch:
-  app:
-    jwtSecret: eVoucherLunchSecretKey
-    jwtExpirationMs: 86400000
+  jwt:
+    secret: eVoucherLunchSecretKey
+    expiration-time: 86400000
