@@ -3,6 +3,7 @@ server:
   # spring boot rest exception message empty
   error:
     include-message: always
+    include-binding-errors: on-param
 
 spring:
   boot:
@@ -69,4 +70,3 @@ evoucherlunch:
   jwt:
     secret: eVoucherLunchSecretKey
     expiration-time: 86400000
-
