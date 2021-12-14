@@ -1,0 +1,48 @@
+server:
+  port: 9040 #server port dynamically assign 0
+  # spring boot rest exception message empty
+  error:
+    include-message: always
+    include-binding-errors: on-param
+
+spring:
+  boot:
+    admin:
+      discovery:
+        converter:
+          management-context-path: /actuator
+  cloud:
+    loadbalancer:
+      ribbon:
+        enabled: false
+  jpa:
+    show-sql: true
+    # Permet de generer automatique la creation des tables a partir des entit�s
+    defer-datasource-initialization: true
+  h2:
+    console:
+      enabled: true
+      #path=/h2-console //Path at which the console will be available.
+  #datasource:
+    #initialization-mode: always
+
+#Exposition des endpoints avec actuator
+#management.endpoints.web.exposure.include=*
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,beans,env
+
+#Info
+info:
+  app:
+    version: 1.0-Beta
+
+#App Properties
+om:
+  url:
+    test: https://testom.orange.bf:9008/payment
+    prod: https://apiom.orange.bf:9007/payment
+  env: test
+  
