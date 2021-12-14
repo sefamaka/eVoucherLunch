@@ -3,15 +3,7 @@ server:
   # spring boot rest exception message empty
   error:
     include-message: always
-
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: ${EUREKA_URI:http://localhost:8761/eureka}
-  instance:
-    preferIpAddress: true
-    health-check-url-path: /actuator/health
-    #instance-id: ${spring.application.name}-${random.uuid}
+    include-binding-errors: on-param
 
 spring:
   boot:
@@ -25,12 +17,14 @@ spring:
         enabled: false
   jpa:
     show-sql: true
-    # Permet de generer automatique la creation des tables a partir des entités
+    # Permet de generer automatique la creation des tables a partir des entit�s
     defer-datasource-initialization: true
   h2:
     console:
       enabled: true
       #path=/h2-console //Path at which the console will be available.
+  #datasource:
+    #initialization-mode: always
 
 #Exposition des endpoints avec actuator
 #management.endpoints.web.exposure.include=*
@@ -47,5 +41,6 @@ info:
 
 #App Properties
 evoucherlunch:
-  app:
-    uploadDir: images
+  jwt:
+    secret: eVoucherLunchSecretKey
+    expiration-time: 86400000
