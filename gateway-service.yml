@@ -3,6 +3,7 @@ server:
   # spring boot rest exception message empty
   error:
     include-message: always
+    include-binding-errors: on-param
 
 spring:
   boot:
@@ -26,11 +27,23 @@ spring:
         - id: partners
         uri: lb://partner-service/
         predicates:
-          - Path: /api/partners/**,/api/managers/**,/api/categories/**,/api/votes
+          - Path: /api/partners/**,/api/repas/**,/api/categories/**,/api/votes/**
         - id: organizations
         uri: lb://organization-service/
         predicates:
           - Path: /api/organizations/**,/api/contrats/**
+        - id: auth
+        uri: lb://auth-service/
+        predicates:
+          - Path: /api/auth/**,/api/users/**,/api/roles/**
+        - id: order
+        uri: lb://order-service/
+        predicates:
+          - Path: /api/orders/**
+        - id: payment
+        uri: lb://payment-service/
+        predicates:
+          - Path: /api/payments/**
 
 #spring.cloud.gateway.routes[0].filters[0].name=filter
 #spring.cloud.gateway.routes[0].predicates[1]=Path=/managers/**
