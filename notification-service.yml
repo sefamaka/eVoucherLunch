@@ -1,0 +1,69 @@
+server:
+  port: 9050
+  # spring boot rest exception message empty
+  error:
+    include-message: always
+    include-binding-errors: on-param
+
+spring:
+  boot:
+    admin:
+      discovery:
+        converter:
+          management-context-path: /actuator
+  cloud:
+    loadbalancer:
+      ribbon:
+        enabled: false
+  jpa:
+    show-sql: true
+    #generate-ddl: true
+    #hibernate:
+      #ddl-auto: create
+    # Permet de generer automatique la creation des tables a partir des entit�s
+    defer-datasource-initialization: true
+  #h2:
+    #console:
+      #enabled: true
+  #datasource:
+    #initialization-mode: always
+############# Mail Properties ###########################################
+# smtp.gmail.com ou smtp-relay.gmail.com
+  mail:
+    host: smtp.gmail.com
+    port: 465
+    username: serge.kambou@sefawa.com
+    password: skof@bf$1980!
+    protocol: smtp
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+          ssl:
+            enable: true
+    test-connection: false
+
+#Exposition des endpoints avec actuator
+#management.endpoints.web.exposure.include=*
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,beans,env
+
+#datasource
+#spring.datasource.driver-class-name=org.h2.Driver
+#spring.datasource.url=jdbc:h2:mem:db;DB_CLOSE_DELAY=-1
+#spring.datasource.username=sa
+#spring.datasource.password=sa
+
+app:
+  version: 1.0-Beta
+  firebase-configuration-file: firebase-config/evoucherlunch-680c1-firebase-adminsdk-phze4-51578f9ea3.json
+  env:
+    prod: false
+    email:
+      default: serge.kambou@gmail.com
